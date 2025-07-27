@@ -20,18 +20,27 @@ class DemoController extends Controller {
     }
 
     public function register() {
-        // Demo registration - simulate successful registration
-        $_SESSION['success'] = 'Usuario registrado exitosamente (DEMO - sin base de datos)';
-        
-        // Store demo data for showing
-        $userData = [
-            'name' => $_POST['name'] ?? '',
-            'email' => $_POST['email'] ?? '',
-            'role' => $_POST['role'] ?? 'viewer'
-        ];
-        
-        $_SESSION['demo_user'] = $userData;
-        $this->redirect('demo/success');
+        try {
+            // Validate CSRF token
+            $this->validateCsrfToken();
+
+            // Demo registration - simulate successful registration
+            $_SESSION['success'] = 'Usuario registrado exitosamente (DEMO - sin base de datos)';
+            
+            // Store demo data for showing
+            $userData = [
+                'name' => $_POST['name'] ?? '',
+                'email' => $_POST['email'] ?? '',
+                'role' => $_POST['role'] ?? 'viewer'
+            ];
+            
+            $_SESSION['demo_user'] = $userData;
+            $this->redirect('demo/success');
+
+        } catch (Exception $e) {
+            $_SESSION['errors'] = [$e->getMessage()];
+            $this->redirect('demo/register');
+        }
     }
 
     public function success() {
