@@ -69,7 +69,7 @@
                             </div>
                         <?php endif; ?>
 
-                        <form method="POST" action="/users/register" id="registerForm" novalidate>
+                        <form method="POST" action="/demo/register" id="registerForm" novalidate>
                             <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
                             
                             <!-- Nombre -->
@@ -186,6 +186,19 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Update the JavaScript to use demo endpoints
+        document.addEventListener('DOMContentLoaded', function() {
+            // Update the email validation endpoint
+            const originalFetch = window.fetch;
+            window.fetch = function(url, options) {
+                if (url === '/users/validate-email') {
+                    url = '/demo/validate-email';
+                }
+                return originalFetch(url, options);
+            };
+        });
+    </script>
     <script src="/js/register.js"></script>
 </body>
 </html>

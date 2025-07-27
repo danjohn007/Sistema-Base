@@ -6,7 +6,7 @@ class Database {
     private $config;
 
     private function __construct() {
-        $this->config = require_once __DIR__ . '/../config/database.php';
+        $this->config = require_once __DIR__ . '/../../config/database.php';
         $this->connect();
     }
 

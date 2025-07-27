@@ -37,10 +37,17 @@ try {
 
     // Define routes
     $router->get('/', function() {
-        header('Location: /users/register');
+        header('Location: /demo/register');
         exit();
     });
 
+    // Demo routes (no database required)
+    $router->get('/demo/register', 'DemoController@showRegister');
+    $router->post('/demo/register', 'DemoController@register');
+    $router->get('/demo/success', 'DemoController@success');
+    $router->post('/demo/validate-email', 'DemoController@validateEmail');
+
+    // Production routes (require database)
     $router->get('/users/register', 'UserController@showRegister');
     $router->post('/users/register', 'UserController@register');
     $router->post('/users/validate-email', 'UserController@validateEmail');

@@ -15,6 +15,10 @@ abstract class Controller {
 
     protected function redirect($path) {
         $baseUrl = $this->getBaseUrl();
+        // Remove leading slash from path to avoid double slashes
+        $path = ltrim($path, '/');
+        // Ensure baseUrl doesn't end with slash when adding path
+        $baseUrl = rtrim($baseUrl, '/');
         header("Location: {$baseUrl}/{$path}");
         exit();
     }
