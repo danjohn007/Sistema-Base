@@ -31,6 +31,11 @@ abstract class Controller {
     }
 
     protected function validateCsrfToken() {
+        // Ensure session is started
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
         if (!isset($_SESSION['csrf_token'])) {
             throw new Exception('CSRF token not found in session');
         }
@@ -43,6 +48,11 @@ abstract class Controller {
     }
 
     protected function generateCsrfToken() {
+        // Ensure session is started
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
         if (!isset($_SESSION['csrf_token'])) {
             $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
         }
